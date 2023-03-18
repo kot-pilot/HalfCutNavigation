@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core;
+using System;
+using System.Timers;
 using System.Windows.Forms;
 using WindowsFormsUI.Properties;
 
@@ -17,12 +19,25 @@ namespace WindowsFormsUI
             Application.Run(new MyCustomApplicationContext());
         }
 
+        private static void timerElapsedEvent(object sender, ElapsedEventArgs e)
+        {
+            HalfMoveCaretService halfMoveCaretService = new HalfMoveCaretService();
+            halfMoveCaretService.HalfMoveRight();
+        }
+
         public class MyCustomApplicationContext : ApplicationContext
         {
             private NotifyIcon trayIcon;
+            private System.Timers.Timer timer;
 
             public MyCustomApplicationContext()
             {
+                timer = new System.Timers.Timer();
+                timer.Elapsed += new ElapsedEventHandler(timerElapsedEvent);
+                timer.Interval = 5000;
+                timer.Enabled = true;
+
+
                 // Initialize Tray Icon
                 trayIcon = new NotifyIcon()
                 {
