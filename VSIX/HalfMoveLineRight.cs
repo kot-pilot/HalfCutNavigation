@@ -88,7 +88,7 @@ namespace VSIX
             ThreadHelper.ThrowIfNotOnUIThread();
 
             DTE dte = Package.GetGlobalService(typeof(DTE)) as DTE;
-            var textSelection = (dte.ActiveDocument.Selection as EnvDTE.TextSelection);
+            var textSelection = dte.ActiveDocument.Selection as EnvDTE.TextSelection;
             int lineCharOffset = textSelection.ActivePoint.LineCharOffset;
             int lineLength = textSelection.ActivePoint.LineLength + 1;
             int moveRightCount = (lineLength - lineCharOffset) / 2;
