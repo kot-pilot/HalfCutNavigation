@@ -89,8 +89,10 @@ namespace VSIX
 
             DTE dte = Package.GetGlobalService(typeof(DTE)) as DTE;
             var textSelection = (dte.ActiveDocument.Selection as EnvDTE.TextSelection);
-
-            textSelection.CharRight(Count: 10);
+            int lineCharOffset = textSelection.ActivePoint.LineCharOffset;
+            int lineLength = textSelection.ActivePoint.LineLength + 1;
+            int moveRightCount = (lineLength - lineCharOffset) / 2;
+            textSelection.CharRight(Count: moveRightCount);
         }
     }
 }
